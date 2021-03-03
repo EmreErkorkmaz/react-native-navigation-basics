@@ -6,40 +6,47 @@ import CategoriesScreen from "../screens/CategoriesScreen";
 import CategoryMealsScreen from "../screens/CategoryMealsScreen";
 import MealDetailScreen from "../screens/MealDetailScreen";
 
+const platformHandler = (type: string) => {
+  if(type === 'android'){
+    return {
+      headerStyle: {
+        backgroundColor: Colors.primaryColor,
+      },
+      headerTintColor:"white",
+    }
+  } else {
+    return {
+      headerStyle: {
+        backgroundColor: "white",
+      },
+      headerTintColor: Colors.primaryColor,
+    }
+  }
+}
+
+const platformStyles = platformHandler(Platform.OS);
+
 const MealsNavigator = createStackNavigator({
   Categories: {
     screen: CategoriesScreen,
     navigationOptions: {
       headerTitle: "Categories",
-      headerStyle: {
-        backgroundColor:
-          Platform.OS === "android" ? Colors.primaryColor : "white",
-      },
-      headerTintColor: Platform.OS === "android" ? "white" : "black",
     },
   },
   "Category Meals": {
     screen: CategoryMealsScreen,
     navigationOptions: {
-      headerTitle: "Meals Categories",
-      headerStyle: {
-        backgroundColor:
-          Platform.OS === "android" ? Colors.primaryColor : "white",
-      },
-      headerTintColor: Platform.OS === "android" ? "white" : "black",
+      ...CategoryMealsScreen.navigationOptions,
     },
   },
   "Meal Detail": {
     screen: MealDetailScreen,
     navigationOptions: {
       headerTitle: "Meal Detail",
-      headerStyle: {
-        backgroundColor:
-          Platform.OS === "android" ? Colors.primaryColor : "white",
-      },
-      headerTintColor: Platform.OS === "android" ? "white" : "black",
     },
-  },
+  }
+}, {
+  defaultNavigationOptions: platformStyles
 });
 
 export default createAppContainer(MealsNavigator);
