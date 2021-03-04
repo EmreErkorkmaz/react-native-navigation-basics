@@ -7,7 +7,12 @@ import Meal from '../models/meal';
 const CategoryMealsScreen = ({ navigation } : any) => {
   const renderMealItem = (itemData: {item: Meal}) => {
     return (
-      <MealItem itemData={itemData} onSelectMeal={() => {}}/>
+      <MealItem itemData={itemData} onSelectMeal={() => {navigation.navigate({
+        routeName: 'Meal Detail',
+        params: {
+          mealId: itemData.item.id
+        }
+      })}}/>
     );
   }
 

@@ -1,9 +1,13 @@
+import React from 'react';
 import { Platform } from "react-native";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { Ionicons } from '@expo/vector-icons'; 
 import Colors from "../constants/Colors";
 import CategoriesScreen from "../screens/CategoriesScreen";
 import CategoryMealsScreen from "../screens/CategoryMealsScreen";
+import FavoritesScreen from "../screens/FavoritesScreen";
 import MealDetailScreen from "../screens/MealDetailScreen";
 
 const platformHandler = (type: string) => {
@@ -42,11 +46,33 @@ const MealsNavigator = createStackNavigator({
   "Meal Detail": {
     screen: MealDetailScreen,
     navigationOptions: {
-      headerTitle: "Meal Detail",
+      ...MealDetailScreen.navigationOptions,
     },
   }
 }, {
   defaultNavigationOptions: platformStyles
 });
 
-export default createAppContainer(MealsNavigator);
+const MealsFavTabNavigator = createBottomTabNavigator({
+  Meals: {
+    screen: MealsNavigator
+  },
+  Favorites: { 
+    screen: FavoritesScreen,
+  }
+}, {
+  tabBarOptions: {
+    activeTintColor: Colors.secondaryColor,
+    activeBackgroundColor: Colors.primaryColor,
+    inactiveTintColor: Colors.primaryColor,
+    labelStyle: {
+      paddingBottom: 15
+    },
+    style: {
+      justifyContent: 'center',
+      alignItems: 'center',
+    }
+  }
+});
+
+export default createAppContainer(MealsFavTabNavigator);
