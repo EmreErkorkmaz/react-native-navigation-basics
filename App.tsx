@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, LogBox } from 'react-native';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import MealsNavigator from './navigation/MealsNavigator';
 import { enableScreens } from 'react-native-screens';
 
 enableScreens();
+
+LogBox.ignoreLogs([
+  "Your project is accessing the following APIs from a deprecated global rather than a module import: Constants (expo- constants).",
+]);
+
+LogBox.ignoreAllLogs();
+
 
 const fetchFonts = () => {
   return Font.loadAsync({

@@ -1,22 +1,26 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import { FlatList } from "react-native-gesture-handler";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CategoryGridTile from "../components/CategoryGridTile";
 import { CATEGORIES } from "../data/dummy-data";
+import HeaderButton from "../components/HeaderButton";
 
 const CategoriesScreen = ({ navigation }: any) => {
   const renderGridItem = (itemData: any) => {
     return (
-      <CategoryGridTile 
-      title={itemData.item.title} 
-      color={itemData.item.color}
-      onSelect={() => {
-        navigation.navigate({
-        routeName: "Category Meals",
-        params: {
-          categoryId: itemData.item.id,
-        },
-      });}} />
+      <CategoryGridTile
+        title={itemData.item.title}
+        color={itemData.item.color}
+        onSelect={() => {
+          navigation.navigate({
+            routeName: "Category Meals",
+            params: {
+              categoryId: itemData.item.id,
+            },
+          });
+        }}
+      />
     );
   };
 
@@ -30,6 +34,19 @@ const CategoriesScreen = ({ navigation }: any) => {
   );
 };
 
+CategoriesScreen.navigationOptions = (navData: any) => {
+  return {
+    headerTitle: "Meal Categories",
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item title="Menu" iconName="ios-menu" onPress={() => {
+          navData.navigation.toggleDrawer();
+        }} />
+      </HeaderButtons>
+    ),
+  };
+};
+
 export default CategoriesScreen;
 
 const styles = StyleSheet.create({
@@ -40,7 +57,7 @@ const styles = StyleSheet.create({
   },
   gridItem: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     margin: 15,
     paddingHorizontal: 50,
     height: 150,
